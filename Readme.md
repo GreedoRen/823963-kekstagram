@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Nikita Anikin](https://up.htmlacademy.ru/javascript/16/user/823963).
-* Наставник: [Дмитрий Мирошниченко].
+* Наставник: [Дмитрий Мирошниченко](https://htmlacademy.ru/profile/id591417).
 
 ---
 
