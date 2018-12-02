@@ -91,7 +91,7 @@ var pictureTemplate = document.querySelector('#picture').content.querySelector('
 
 var fragmentPictures = getFragmentPictures(pictureArrayQuantity, pictureTemplate);
 var listPictureElement = document.querySelector('.pictures');
-listPictureElementment.appendChild(fragmentPictures);
+listPictureElement.appendChild(fragmentPictures);
 
 var bigPicture = document.querySelector('.big-picture');
 bigPicture.classList.remove('hidden');
