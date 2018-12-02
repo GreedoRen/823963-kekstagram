@@ -44,7 +44,7 @@ function getDescription() {
   return getRandomArray(description);
 }
 
-var getPictureArray = function (pictureQuantity) {
+var getPictureArray = function () {
   var pictureArray = [];
   for (var i = 0; i < pictureQuantity; i++) {
     var pictureUrlObject = getUrl(i);
@@ -61,7 +61,7 @@ var getPictureArray = function (pictureQuantity) {
       url: pictureUrlObject,
       likes: pictureLikesObject,
       comments: arrayComments,
-      description:pictureDescriptionObject
+      description: pictureDescriptionObject
     };
   }
   return pictureArray;
