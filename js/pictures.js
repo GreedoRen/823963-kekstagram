@@ -115,19 +115,22 @@ var fragmentPictures = getFragmentPictures(pictureArrayQuantity, pictureTemplate
 var listPictureElement = document.querySelector('.pictures');
 listPictureElement.appendChild(fragmentPictures);
 
+document.querySelector('.big-picture').classList.remove('hidden');
 
-// function bigPicture() {
-//   bigPicture.classList.remove('hidden');
-//   bigPicture.querySelector('.big-picture__img img').src = pictureArrayQuantity[getNumber(0, 24)].url;
-//   bigPicture.querySelector('.likes-count').textContent = pictureArrayQuantity[getNumber(0, 24)].likes;
-//   bigPicture.querySelector('.comments-count').textContent = pictureArrayQuantity[getNumber(0, 24)].comments.length;
-// }
+function getBigPicture() {
+  var bigPicture = document.querySelector('.big-picture');
+  bigPicture.querySelector('.big-picture__img img').src = pictureArrayQuantity[getNumber(0, 24)].url;
+  bigPicture.querySelector('.likes-count').textContent = pictureArrayQuantity[getNumber(0, 24)].likes;
+  bigPicture.querySelector('.comments-count').textContent = pictureArrayQuantity[getNumber(0, 24)].comments.length;
+  bigPicture.querySelector('.social__caption').textContent = pictureArrayQuantity[getNumber(0, 24)].description;
+  bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
+  bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
+}
 
-var bigPicture = document.querySelector('.big-picture');
-bigPicture.classList.remove('hidden');
-bigPicture.querySelector('.big-picture__img img').src = pictureArrayQuantity[getNumber(0, 24)].url;
-bigPicture.querySelector('.likes-count').textContent = pictureArrayQuantity[getNumber(0, 24)].likes;
-bigPicture.querySelector('.comments-count').textContent = pictureArrayQuantity[getNumber(0, 24)].comments.length;
+// var bigPicture = document.querySelector('.big-picture');
+// bigPicture.querySelector('.big-picture__img img').src = pictureArrayQuantity[getNumber(0, 24)].url;
+// bigPicture.querySelector('.likes-count').textContent = pictureArrayQuantity[getNumber(0, 24)].likes;
+// bigPicture.querySelector('.comments-count').textContent = pictureArrayQuantity[getNumber(0, 24)].comments.length;
 
 
 // var commentsList = '';
@@ -173,14 +176,14 @@ function getCommentList() {
 //   descriptionList.textContent(listOfDescription);
 // }
 
-bigPicture.querySelector('.social__caption').textContent = pictureArrayQuantity[getNumber(0, 24)].description;
+// getBigPicture.querySelector('.social__caption').textContent = pictureArrayQuantity[getNumber(0, 24)].description;
 
-function getHidePicture() {
-  bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
-  bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
-}
+// function getHidePicture() {
+//   bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
+//   getBigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
+// }
 
-// bigPicture();
-getHidePicture();
+getBigPicture();
+// getHidePicture();
 getCommentList();
 // getDescriptionList();
