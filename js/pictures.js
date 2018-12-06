@@ -39,30 +39,6 @@ function getArrayComments() {
   return getRandomArray(comments);
 }
 
-
-// function getPictureArray() {
-//   var pictureArray = [];
-//   for (var i = 0; i < PICTURE_QUANTITY; i++) {
-//     var pictureUrlObject = getUrl(i);
-//     var pictureLikesObject = getNumber(MIN_LIKE, MAX_LIKE);
-//     var pictureCommentsObject = getNumber(1, 5);
-//     var pictureDescriptionObject = getDescription();
-//     var arrayComments = [];
-
-//     for (var k = 0; k < pictureCommentsObject; k++) {
-//       arrayComments[k] = getRandomArray(comments);
-//     }
-
-//     pictureArray[i] = {
-//       url: pictureUrlObject,
-//       likes: pictureLikesObject,
-//       comments: arrayComments,
-//       description: pictureDescriptionObject
-//     };
-//   }
-//   return pictureArray;
-// }
-
 function getPictureArray() {
   var pictureArray = [];
   for (var i = 0; i < PICTURE_QUANTITY; i++) {
@@ -75,22 +51,8 @@ function getPictureArray() {
   }
   return pictureArray;
 }
-// getPictureArray();
-
-// function getPictureArray() {
-//   for (var i = 0; i < PICTURE_QUANTITY; i++) {
-//     var pictureArray = {
-//       url: getUrl(i),
-//       likes: getNumber(MIN_LIKE, MAX_LIKE),
-//       comments: getArrayComments(),
-//       description: getDescription()
-//     };
-//   }
-//   return pictureArray;
-// };
 
 var pictureArrayQuantity = getPictureArray(PICTURE_QUANTITY);
-
 
 function getPicture(object, template) {
   var objectElement = template.cloneNode(true);
@@ -103,7 +65,7 @@ function getPicture(object, template) {
 
 function getFragmentPictures(array, template) {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < array; i++) {
+  for (var i = 0; i < array.length; i++) {
     fragment.appendChild(getPicture(array[i], template));
   }
   return fragment;
@@ -127,38 +89,6 @@ function getBigPicture() {
   bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
 }
 
-// var bigPicture = document.querySelector('.big-picture');
-// bigPicture.querySelector('.big-picture__img img').src = pictureArrayQuantity[getNumber(0, 24)].url;
-// bigPicture.querySelector('.likes-count').textContent = pictureArrayQuantity[getNumber(0, 24)].likes;
-// bigPicture.querySelector('.comments-count').textContent = pictureArrayQuantity[getNumber(0, 24)].comments.length;
-
-
-// var commentsList = '';
-// for (var i = 0; i < pictureArrayQuantity[0].comments.length; i++) {
-//   commentsList = '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getNumber(1, 6)
-//     + '.svg" alt="Аватар комментатора фотографии"width="35" height="35"><p class="social__text">' + getPictureArray.comments + '</p></li>';
-// }
-// return commentsList;
-// }
-
-// function getCommentList() {
-//   var commentsList = '';
-//   for (var i = 0; i < pictureArrayQuantity[0].comments.length; i++) {
-//     commentsList = commentsList + '<li class="social__comment"><img class="social__picture" src="img/avatar-'
-//     + getNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">'
-//     + pictureArrayQuantity[1].comments + '</p></li>';
-//   }
-
-//   return commentsList;
-// }
-
-// function getCommentList() {
-//   var commentList = document.querySelector('.social__comments');
-//   var listOfComments = '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии"width="35" height="35"><p class="social__text">'
-//    + getPictureArray.comments + '</p></li>';
-//   commentList.insertAdjacentHTML('beforeend', listOfComments);
-// }
-
 function getCommentList() {
   var commentList = document.querySelector('.social__comments');
   var listOfComments = '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии"width="35" height="35"><p class="social__text">'
@@ -166,24 +96,5 @@ function getCommentList() {
   commentList.insertAdjacentHTML('beforeend', listOfComments);
 }
 
-// bigPicture.querySelector('.social__comments').textContent = pictureArrayQuantity[getNumber(0, 24)].comments;
-
-
-// bigPicture.querySelector('.social__comments').insertAdjacentHTML('beforeend', getCommentList);
-// function getDescriptionList() {
-//   var descriptionList = document.querySelector('.social__caption');
-//   var listOfDescription = pictureArrayQuantity[getNumber(0, 24)].description;
-//   descriptionList.textContent(listOfDescription);
-// }
-
-// getBigPicture.querySelector('.social__caption').textContent = pictureArrayQuantity[getNumber(0, 24)].description;
-
-// function getHidePicture() {
-//   bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
-//   getBigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
-// }
-
 getBigPicture();
-// getHidePicture();
 getCommentList();
-// getDescriptionList();
