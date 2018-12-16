@@ -2,6 +2,10 @@
 var MIN_LIKE = 15;
 var MAX_LIKE = 200;
 var PICTURE_QUANTITY = 25;
+var VALUE_SIZE_MIN = 25;
+var VALUE_SIZE_MAX = 100;
+var VALUE_SIZE_STEP = 25;
+var ESC_KEYCODE = 27;
 var comments = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -135,10 +139,6 @@ var effectLine = document.querySelector('.effect-level__line');
 var effectLevelValue = document.querySelector('.effect-level__value');
 var pinEffect = document.querySelector('.effect-level__pin');
 var effectDepth = effectLine.querySelector('.effect-level__depth');
-var VALUE_SIZE_MIN = 25;
-var VALUE_SIZE_MAX = 100;
-var VALUE_SIZE_STEP = 25;
-var ESC_KEYCODE = 27;
 
 function uploadFormEscPress(evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -200,47 +200,70 @@ function getEffectLevel(current, max) {
   return Math.round(current * 100 / max);
 }
 // -----------------------
-function filterEffects() {
-  var effectLevel = getEffectLevel(pinEffect.offsetLeft, effectLine.offsetWidth);
-  effectLevelValue.value = effectLevel;
-  if (imgPreviewElement.matches('.effects__preview--chrome')) {
-    imgPreviewElement.style.filter = 'grayscale(' + 1 / 100 * effectLevel + ')';
-  } else if (imgPreviewElement.matches('.effects__preview--sepia')) {
-    imgPreviewElement.style.filter = 'sepia(' + 1 / 100 * effectLevel + ')';
-  } else if (imgPreviewElement.matches('.effects__preview--marvin')) {
-    imgPreviewElement.style.filter = 'invert(' + effectLevel + '%)';
-  } else if (imgPreviewElement.matches('.effects__preview--phobos')) {
-    imgPreviewElement.style.filter = 'blur(' + 3 / 100 * effectLevel + 'px)';
-  } else if (imgPreviewElement.matches('.effects__preview--heat')) {
-    imgPreviewElement.style.filter = 'brightness(' + 3 / 100 * effectLevel + ')';
-  } else {
-    imgPreviewElement.style.filter = '';
-  }
-}
-// -----------------------
 // function filterEffects() {
-//   // var effectsName = effectsItem.querySelector('input').value;
 //   var effectLevel = getEffectLevel(pinEffect.offsetLeft, effectLine.offsetWidth);
 //   effectLevelValue.value = effectLevel;
-//   for (var i = 0; i < currentEffectClass.length; i++) {
-//     if (imgPreviewElement.matches(currentEffectClass)) {
-//       imgPreviewElement.style.filter = 'grayscale(' + 1 / 100 * effectLevel + ')';
-//     } else {
-//       imgPreviewElement.style.filter = '';
-//     }
+//   if (imgPreviewElement.matches('.effects__preview--chrome')) {
+//     imgPreviewElement.style.filter = 'grayscale(' + 1 / 100 * effectLevel + ')';
+//   } else if (imgPreviewElement.matches('.effects__preview--sepia')) {
+//     imgPreviewElement.style.filter = 'sepia(' + 1 / 100 * effectLevel + ')';
+//   } else if (imgPreviewElement.matches('.effects__preview--marvin')) {
+//     imgPreviewElement.style.filter = 'invert(' + effectLevel + '%)';
+//   } else if (imgPreviewElement.matches('.effects__preview--phobos')) {
+//     imgPreviewElement.style.filter = 'blur(' + 3 / 100 * effectLevel + 'px)';
+//   } else if (imgPreviewElement.matches('.effects__preview--heat')) {
+//     imgPreviewElement.style.filter = 'brightness(' + 3 / 100 * effectLevel + ')';
+//   } else {
+//     imgPreviewElement.style.filter = '';
 //   }
 // }
+
 // -----------------------
 
-// var chooseEffect = function (evt) {
-//   for (var i = 0; i < effects.length; i++) {
-//     if ('effects__preview--' + evt.target.value === effects[i]) {
-//       uploadPreview.classList.add('effects__preview--' + evt.target.value);
-//     } else {
-//       uploadPreview.classList.remove(effects[i]);
-//     }
-//   }
+var chooseEffect = function (evt) {
+  for (var i = 0; i < effects.length; i++) {
+    if ('effects__preview--' + evt.target.value === effects[i]) {
+      uploadPreview.classList.add('effects__preview--' + evt.target.value);
+    } else {
+      uploadPreview.classList.remove(effects[i]);
+    }
+  }
 // -----------------------
+
+
+var EffectParameter = [
+  {
+    name: 'chrome',
+    filters: 'grayscale',
+    minValue: 0,
+    maxValue: 1
+  },
+  {
+    name: 'sepia',
+    filters: 'sepia',
+    minValue: 0,
+    maxValue: 1
+  },
+  {
+    name: 'marvin',
+    filters: 'invert',
+    minValue: 0,
+    maxValue: 1
+  },
+  {
+    name: 'phobos',
+    filters: 'blur',
+    minValue: 0,
+    maxValue: 3
+  },
+  {
+    name: 'heat',
+    filters: 'brightness',
+    minValue: 1,
+    maxValue: 3
+  }
+];
+
 
 // ----------------
 function dragImageEffects() {
