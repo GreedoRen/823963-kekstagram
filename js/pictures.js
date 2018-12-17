@@ -127,7 +127,6 @@ function getCommentList() {
 
 getCommentList();
 
-var uploadEffects = document.querySelector('.img-upload__effects');
 var scaleControlSmaller = document.querySelector('.scale__control--smaller');
 var scaleControlBigger = document.querySelector('.scale__control--bigger');
 var scaleControlValue = document.querySelector('.scale__control--value');
@@ -200,7 +199,7 @@ Array.from(effectsItem).forEach(function (item) {
 function getEffectLevel(current, max) {
   return Math.round(current * 100 / max);
 }
-// ----------------------
+// -----------------------
 
 var FILTERS = {
   none: {
@@ -226,7 +225,7 @@ var FILTERS = {
     className: 'effects__preview--marvin',
     filter: 'invert',
     minValue: '1',
-    maxValue: '100',
+    maxValue: '1',
     filterUnit: '%',
   },
   phobos: {
