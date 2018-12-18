@@ -6,6 +6,8 @@ var VALUE_SIZE_MIN = 25;
 var VALUE_SIZE_MAX = 100;
 var VALUE_SIZE_STEP = 25;
 var ESC_KEYCODE = 27;
+var MAX_HASHTAG = 5;
+var MAX_HASHTAG_LETTERS = 20;
 var comments = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -255,8 +257,39 @@ function filterEffects(i) {
     }
   }
 }
+// -------------------------
+var hashtagInputText = document.querySelector('.text__hashtags');
+hashtagInputText.addEventListener('change', function () {
+  var hashtagsInput = hashtagInputText.value;
+  var newLowerHashtags = hashtagsInput.toLowerCase();
+  hashtagInputText.value = newLowerHashtags;
+  var hashtags = hashtagInputText.value.split(' ');
+  var hashtag;
+  var hashtagLetters;
+  if (hashtags.length > MAX_HASHTAG) {
+    hashtagInputText.setCustomValidity('Максимум хештегов: 5');
+  }
+  for (var i = 0; i < hashtags.length; i++) {
+    hashtag = hashtags[i];
+    hashtagLetters = hashtag.split('');
+    if (hashtagLetters[0] !== '#' && hashtagLetters.length !== 0) {
+      hashtagInputText.setCustomValidity('Хэштег начинается с # ');
+    } else if (hashtagLetters.length > MAX_HASHTAG_LETTERS) {
+      hashtagInputText.setCustomValidity('Максимум 20 символов, включая решётку');
+    } else if (hashtagLetters.length === 1) {
+      hashtagInputText.setCustomValidity('Хештег не должен состоять из одной решётки');
+    } else if (hashtag.indexOf('#', 1) !== -1) {
+      hashtagInputText.setCustomValidity('Хэштеги должны разделяться пробелом');
+    } else if (hashtags.indexOf(hashtag) !== hashtags.lastIndexOf(hashtag)) {
+      hashtagInputText.setCustomValidity('Хештеги должны не повторяться');
+    } else {
+      hashtagInputText.setCustomValidity('');
+    }
+  }
+});
 
-// ----------------
+// ------------------------
+
 function dragImageEffects() {
   pinEffect.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
