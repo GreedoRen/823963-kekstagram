@@ -24,6 +24,49 @@ var description = [
   'Вот это тачка!'
 ];
 
+var FILTERS = {
+  none: {
+    className: 'effects__preview--none',
+    filter: '',
+    maxValue: 0
+  },
+  chrome: {
+    className: 'effects__preview--chrome',
+    filter: 'grayscale',
+    minValue: '1',
+    maxValue: '100',
+    filterUnit: '',
+  },
+  sepia: {
+    className: 'effects__preview--sepia',
+    filter: 'sepia',
+    minValue: '1',
+    maxValue: '100',
+    filterUnit: '',
+  },
+  marvin: {
+    className: 'effects__preview--marvin',
+    filter: 'invert',
+    minValue: '1',
+    maxValue: '1',
+    filterUnit: '%',
+  },
+  phobos: {
+    className: 'effects__preview--phobos',
+    filter: 'blur',
+    minValue: '3',
+    maxValue: '100',
+    filterUnit: 'px',
+  },
+  heat: {
+    className: 'effects__preview--heat',
+    filter: 'brightness',
+    minValue: '3',
+    maxValue: '100',
+    filterUnit: '',
+  }
+};
+
 function getUrl(i) {
   return 'photos/' + (i + 1) + '.jpg';
 }
@@ -200,49 +243,6 @@ function getEffectLevel(current, max) {
   return Math.round(current * 100 / max);
 }
 // -----------------------
-
-var FILTERS = {
-  none: {
-    className: 'effects__preview--none',
-    filter: '',
-    maxValue: 0
-  },
-  chrome: {
-    className: 'effects__preview--chrome',
-    filter: 'grayscale',
-    minValue: '1',
-    maxValue: '100',
-    filterUnit: '',
-  },
-  sepia: {
-    className: 'effects__preview--sepia',
-    filter: 'sepia',
-    minValue: '1',
-    maxValue: '100',
-    filterUnit: '',
-  },
-  marvin: {
-    className: 'effects__preview--marvin',
-    filter: 'invert',
-    minValue: '1',
-    maxValue: '1',
-    filterUnit: '%',
-  },
-  phobos: {
-    className: 'effects__preview--phobos',
-    filter: 'blur',
-    minValue: '3',
-    maxValue: '100',
-    filterUnit: 'px',
-  },
-  heat: {
-    className: 'effects__preview--heat',
-    filter: 'brightness',
-    minValue: '3',
-    maxValue: '100',
-    filterUnit: '',
-  }
-};
 
 function filterEffects(i) {
   var effectLevel = getEffectLevel(pinEffect.offsetLeft, effectLine.offsetWidth);
