@@ -293,7 +293,16 @@ hashtagInputButton.addEventListener('click', function () {
   }
 });
 
+hashtagInputText.addEventListener('focus', function () {
+  document.removeEventListener('keydown', uploadFormEscPress);
+});
+
+hashtagInputText.addEventListener('blur', function () {
+  document.addEventListener('keydown', uploadFormEscPress);
+});
+
 // -------------------------
+
 function dragImageEffects() {
   pinEffect.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -314,10 +323,9 @@ function dragImageEffects() {
       effectDepth.style.width = pinEffect.offsetLeft + 'px';
       if (pinEffect.offsetLeft - shiftPosition.x < 0) {
         pinEffect.style.left = 0 + 'px';
-        document.removeEventListener('mousemove', mouseMove);
       } else if (pinEffect.offsetLeft > effectLine.offsetWidth) {
         pinEffect.style.left = effectLine.offsetWidth + 'px';
-        document.removeEventListener('mousemove', mouseMove);
+        effectDepth.style.width = effectLine.offsetWidth + 'px';
       }
       filterEffects();
     }
@@ -336,3 +344,4 @@ function dragImageEffects() {
 dragImageEffects();
 
 // ----------------------------------
+
