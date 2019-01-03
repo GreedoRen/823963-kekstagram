@@ -44,5 +44,88 @@
   hashtagInputText.addEventListener('blur', function () {
     document.addEventListener('keydown', window.form.uploadFormEscPress);
   });
-})();
 
+  // --------------------------------------
+
+  var closeSuccess = function () {
+    document.removeEventListener('click', onSuccessClick);
+    document.querySelector('main').removeChild(document.querySelector('main').querySelector('.success'));
+  };
+
+  var onSuccessClick = function (evt) {
+    var successInnerMain = document.querySelector('main').querySelector('.success__inner');
+    if (evt.target !== successInnerMain) {
+      closeSuccess();
+    }
+  };
+
+  var closePopup = function () {
+    imgUploadForm.reset();
+    window.form.uploadOverlay.classList.add('hidden');
+    document.removeEventListener('keydown', window.form.uploadFormEscPress);
+    window.form.imgPreviewElement.style = '';
+    hashtagInputText.classList.remove('border-red');
+  };
+
+  var templateError = document.querySelector('#error')
+      .content
+      .querySelector('.error');
+
+  var closeError = function () {
+    document.removeEventListener('click', onErrorClick);
+    document.querySelector('main').removeChild(document.querySelector('main').querySelector('.error'));
+  };
+
+  var onErrorClick = function (evt) {
+    var errorInnerMain = document.querySelector('main').querySelector('.error__inner');
+    if (evt.target !== errorInnerMain) {
+      closeError();
+    }
+  };
+
+  function openError(errorNode) {
+    var openErrorTemplate = templateError.cloneNode(true);
+    document.querySelector('main').appendChild(openErrorTemplate);
+    var openedBtnError = openErrorTemplate.querySelectorAll('.error__button');
+    openedBtnError[0].focus();
+    if (errorNode) {
+      openErrorTemplate.querySelector('.error__title').innerHTML = errorNode;
+      openErrorTemplate.querySelector('.error__title').style = 'font-size: 20px';
+    }
+
+    openedBtnError.forEach(function (evtBtn) {
+      evtBtn.addEventListener('click', function () {
+        closeError();
+      });
+    });
+    document.addEventListener('click', onErrorClick);
+  }
+
+  var templateSuccess = document.querySelector('#success')
+      .content
+      .querySelector('.success');
+
+  function openSuccess() {
+    var openedSuccessTenplate = templateSuccess.cloneNode(true);
+    document.querySelector('main').appendChild(openedSuccessTenplate);
+    var openedBtn = openedSuccessTenplate.querySelector('.success__button');
+    openedBtn.focus();
+    openedBtn.addEventListener('click', function () {
+      closeSuccess();
+    });
+    document.addEventListener('click', onSuccessClick);
+  }
+
+  var imgUploadForm = document.querySelector('.img-upload__form');
+  imgUploadForm.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(imgUploadForm), function () {
+      closePopup();
+      openSuccess();
+    },
+    function () {
+      closePopup();
+      openError();
+    });
+    evt.preventDefault();
+  });
+})();
