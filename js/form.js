@@ -173,7 +173,12 @@
   }
   dragImageEffects();
 
+  // ---------------------------------------
+
   window.form = {
-    uploadFormEscPress: uploadFormEscPress
+    imgPreviewElement: imgPreviewElement,
+    uploadOverlay: uploadOverlay,
+    uploadFormEscPress: uploadFormEscPress,
+    uploadFormClose: uploadFormClose
   };
 })();
