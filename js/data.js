@@ -4,6 +4,9 @@
     MIN: 0,
     MAX: 10
   };
+  var imgFiltersForm = document.querySelector('.img-filters__form');
+  var imgFiltersButton = imgFiltersForm.querySelectorAll('.img-filters__button');
+  var picture = document.querySelector('.pictures');
   var filters = document.querySelector('.img-filters');
   var pictureList = [];
 
@@ -50,20 +53,17 @@
     filter(pictureList);
   };
 
-  // ---------------------------
-  function filter(photos) {
-    var imgFiltersForm = document.querySelector('.img-filters__form');
-    var imgFiltersButton = imgFiltersForm.querySelectorAll('.img-filters__button');
-    var picture = document.querySelector('.pictures');
 
+  // ---------------------------
+  var sortComments = function (posts) {
+    return posts.slice().sort(function (first, second) {
+      return second.comments.length - first.comments.length;
+    });
+  };
+
+  function filter(photos) {
     var addNewPhoto = function (photo) {
       return window.util.shuffleArray(photo).slice(randomPhoto.MIN, randomPhoto.MAX);
-    };
-
-    var sortComments = function (posts) {
-      return posts.slice().sort(function (first, second) {
-        return second.comments.length - first.comments.length;
-      });
     };
 
     var sortPhoto = function (evt) {
@@ -88,10 +88,8 @@
     var debounceFilters = window.debounce(sortPhoto);
     imgFiltersForm.addEventListener('click', function (evt) {
       var target = evt.target;
-      if (target.tagName === 'BUTTON') {
-        setClass(target.id);
-        debounceFilters(evt);
-      }
+      setClass(target.id);
+      debounceFilters(evt);
     });
 
     var setClass = function (currentFilter) {
