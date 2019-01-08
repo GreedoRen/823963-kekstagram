@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var url = {
+  var Url = {
     UPLOAD: 'https://js.dump.academy/kekstagram',
     DATA: 'https://js.dump.academy/kekstagram/data'
   };
@@ -37,13 +37,13 @@
 
   function save(data, onLoad, onError) {
     var xhr = serverRequest(onLoad, onError);
-    xhr.open('POST', url.UPLOAD);
+    xhr.open('POST', Url.UPLOAD);
     xhr.send(data);
   }
 
   function load(onLoad, onError) {
     var xhr = serverRequest(onLoad, onError);
-    xhr.open('GET', url.DATA);
+    xhr.open('GET', Url.DATA);
     xhr.send();
   }
 
