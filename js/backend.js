@@ -1,7 +1,10 @@
 'use strict';
 (function () {
-  var UPLOAD_URL = 'https://js.dump.academy/kekstagram';
-  var DATA_URL = 'https://js.dump.academy/kekstagram/data';
+  var Url = {
+    UPLOAD: 'https://js.dump.academy/kekstagram',
+    DATA: 'https://js.dump.academy/kekstagram/data'
+  };
+
   var TIMEOUT = 10000;
   var SUCCESS_STATUS = 200;
 
@@ -32,18 +35,21 @@
     return xhr;
   }
 
-  window.backend = {
-    save: function (data, onLoad, onError) {
-      var xhr = serverRequest(onLoad, onError);
-      xhr.open('POST', UPLOAD_URL);
-      xhr.send(data);
-    },
-    load: function (onLoad, onError) {
-      var xhr = serverRequest(onLoad, onError);
-      xhr.open('GET', DATA_URL);
-      xhr.send();
-    },
-  };
+  function save(data, onLoad, onError) {
+    var xhr = serverRequest(onLoad, onError);
+    xhr.open('POST', Url.UPLOAD);
+    xhr.send(data);
+  }
 
+  function load(onLoad, onError) {
+    var xhr = serverRequest(onLoad, onError);
+    xhr.open('GET', Url.DATA);
+    xhr.send();
+  }
+
+  window.backend = {
+    save: save,
+    load: load
+  };
 })();
 

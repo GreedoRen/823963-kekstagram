@@ -1,17 +1,23 @@
 'use strict';
 (function () {
+  var COMMENTS_MAX = 5;
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureClose = bigPicture.querySelector('#picture-cancel');
-  var pictureBody = document.querySelector('body');
+  var picture = {};
+  var bigPictureComments = document.querySelector('.social__comments');
+  var bigPictureCommentsLoader = bigPicture.querySelector('.social__comments-loader');
+  var bigPictureCommentCount = bigPicture.querySelector('.social__comment-count');
+  var countIndexComments = 0;
+  var arrayComments = [];
 
   function showBigPicture() {
     bigPicture.classList.remove('hidden');
-    pictureBody.classList.add('modal-open');
     document.addEventListener('keydown', hideBigPictureHandler);
   }
 
   function closeBigPicture() {
     bigPicture.classList.add('hidden');
+    reset();
     document.querySelector('body').classList.remove('modal-open');
     document.removeEventListener('keydown', hideBigPictureHandler);
   }
@@ -25,22 +31,72 @@
   bigPictureClose.addEventListener('click', closeBigPicture);
   function getBigPicture(object) {
     showBigPicture();
+    picture = object;
     bigPicture.querySelector('.big-picture__img img').src = object.url;
     bigPicture.querySelector('.likes-count').textContent = object.likes;
-    bigPicture.querySelector('.comments-count').textContent = object.comments.length;
     bigPicture.querySelector('.social__caption').textContent = object.description;
-    bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
-    bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
+    loadNewComments();
+
+    if (picture.comments.length <= (countIndexComments)) {
+      bigPictureCommentsLoader.classList.add('visually-hidden');
+    }
   }
 
-  // function getCommentList() {
-  //   var commentList = document.querySelector('.social__comments');
-  //   var listOfComments = '<li class="social__comment"><img class="social__picture" src="img/avatar-' + window.data.getNumber(1, 6) + '.svg" alt="Аватар комментатора фотографии"width="35" height="35"><p class="social__text">'
-  //      + window.data.pictureArrayQuantity[window.data.getNumber(0, 24)].comments + '</p></li>';
-  //   commentList.insertAdjacentHTML('beforeend', listOfComments);
-  // }
+  // -----------------------
+  function createCommentTemplate(comments) {
+    var liElement = window.util.createElement('li', 'social__comment');
 
-  // getCommentList();
+    var avatar = window.util.createElement('img', 'social__picture');
+    avatar.src = comments.avatar;
+    avatar.alt = 'Аватар';
+    liElement.appendChild(avatar);
+
+    var textComments = window.util.createElement('p', 'social__text', comments.message);
+    liElement.appendChild(textComments);
+
+    return liElement;
+  }
+
+  function addComments(object) {
+    while (bigPictureComments.firstChild) {
+      bigPictureComments.removeChild(bigPictureComments.firstChild);
+    }
+
+    for (var i = 0; i < object.length; i++) {
+      var commentsItem = createCommentTemplate(object[i]);
+      bigPictureComments.appendChild(commentsItem);
+    }
+  }
+
+  function reset() {
+    arrayComments = [];
+    countIndexComments = 0;
+    bigPictureCommentsLoader.classList.remove('visually-hidden');
+  }
+
+  function loadNewComments() {
+    var partComments = picture.comments.slice(countIndexComments, countIndexComments + COMMENTS_MAX);
+    for (var i = 0; i < partComments.length; i++) {
+      arrayComments.push(partComments[i]);
+    }
+    addComments(arrayComments);
+    countIndexComments += COMMENTS_MAX;
+
+    var commentsLength = picture.comments.length;
+    var openComments = bigPictureComments.childNodes.length;
+    bigPictureCommentCount.innerHTML = openComments + ' из <span class="comments-count">' + commentsLength + '</span> комментариев</div>';
+  }
+
+  function commentsHandler() {
+    loadNewComments();
+    if (picture.comments.length <= (countIndexComments)) {
+      bigPictureCommentsLoader.classList.add('visually-hidden');
+    }
+  }
+
+  bigPictureCommentsLoader.addEventListener('click', commentsHandler);
+
+  // -----------------------
 
   window.picture = {
     getBigPicture: getBigPicture
