@@ -95,7 +95,11 @@
     photoSizeChanging(1);
   });
 
-  uploadInput.addEventListener('change', uploadFormOpen);
+  uploadInput.addEventListener('change', function () {
+    uploadFormOpen();
+    window.upload.upload();
+  });
+
   Array.from(effectsItem).forEach(function (item) {
     item.addEventListener('click', function (evt) {
       evt.preventDefault();
