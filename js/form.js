@@ -57,6 +57,8 @@
   var effectLevelValue = document.querySelector('.effect-level__value');
   var pinEffect = document.querySelector('.effect-level__pin');
   var effectDepth = effectLine.querySelector('.effect-level__depth');
+  var imageUploadPreview = uploadOverlay.querySelector('.img-upload__preview img');
+  var form = document.querySelector('.img-upload__form');
 
   function uploadFormEscPress(evt) {
     if (evt.keyCode === window.util.ESC_KEYCODE) {
@@ -105,7 +107,7 @@
       evt.preventDefault();
       imgPreviewElement.classList = '';
       var effect = item.querySelector('input').value;
-      imgPreviewElement.style = '';
+      imgPreviewElement.style.filter = '';
       pinEffect.style.left = '100%';
       effectDepth.style.width = '100%';
       effectLevelValue.value = 100;
@@ -126,8 +128,6 @@
   function filterEffects(i) {
     var effectLevel = getEffectLevel(pinEffect.offsetLeft, effectLine.offsetWidth);
     effectLevelValue.value = effectLevel;
-    var imageUploadPopup = document.querySelector('.img-upload__overlay');
-    var imageUploadPreview = imageUploadPopup.querySelector('.img-upload__preview img');
     for (i in FILTERS) {
       if (imageUploadPreview.className === FILTERS[i].className) {
         imageUploadPreview.style.filter = FILTERS[i].filter + '(' + FILTERS[i].minValue / FILTERS[i].maxValue * effectLevel + FILTERS[i].filterUnit + ')';
@@ -135,32 +135,44 @@
     }
   }
 
-  // -------------------------
+  function resetFilter() {
+    imageUploadPreview.className = 'effects__preview--none';
+    imageUploadPreview.style.filter = '';
+    imageUploadPreview.style.transform = '';
+    form.reset();
+  }
 
+  // -------------------------
   function dragImageEffects() {
     pinEffect.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
       var startPosition = {
-        x: evt.clientX,
+        x: evt.clientX
       };
 
       function mouseMove(move) {
         move.preventDefault();
+
         var shiftPosition = {
           x: startPosition.x - move.clientX,
         };
         startPosition = {
-          x: move.clientX,
+          x: move.clientX
         };
+
         pinEffect.style.left = (pinEffect.offsetLeft - shiftPosition.x) + 'px';
         effectDepth.style.width = pinEffect.offsetLeft + 'px';
+
         if (pinEffect.offsetLeft - shiftPosition.x < 0) {
           pinEffect.style.left = 0 + 'px';
+          effectDepth.style.width = 0 + 'px';
         } else if (pinEffect.offsetLeft > effectLine.offsetWidth) {
           pinEffect.style.left = effectLine.offsetWidth + 'px';
           effectDepth.style.width = effectLine.offsetWidth + 'px';
         }
+
+
         filterEffects();
       }
 
@@ -183,6 +195,8 @@
     imgPreviewElement: imgPreviewElement,
     uploadOverlay: uploadOverlay,
     uploadFormEscPress: uploadFormEscPress,
-    uploadFormClose: uploadFormClose
+    uploadFormClose: uploadFormClose,
+    resetFilter: resetFilter
+
   };
 })();

@@ -23,14 +23,14 @@
     return resultArray;
   }
 
-  var createElement = function (tagName, className, text) {
+  function createElement(tagName, className, text) {
     var element = document.createElement(tagName);
     element.classList.add(className);
     if (text) {
       element.textContent = text;
     }
     return element;
-  };
+  }
 
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
