@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  function fileloader() {
+  function loadFile() {
     var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
     var imgPreviewFile = document.querySelector('.img-upload__preview img');
@@ -25,7 +25,7 @@
   }
 
   window.upload = {
-    fileloader: fileloader
+    loadFile: loadFile
   };
 
 })();

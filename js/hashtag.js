@@ -41,11 +41,11 @@
   });
 
   hashtagInputText.addEventListener('focus', function () {
-    document.removeEventListener('keydown', window.form.uploadEscPress);
+    document.removeEventListener('keydown', window.form.onUploadEscPress);
   });
 
   hashtagInputText.addEventListener('blur', function () {
-    document.addEventListener('keydown', window.form.uploadEscPress);
+    document.addEventListener('keydown', window.form.onUploadEscPress);
   });
 
   // --------------------------------------
@@ -71,11 +71,11 @@
   });
 
   textArea.addEventListener('focus', function () {
-    document.removeEventListener('keydown', window.form.uploadEscPress);
+    document.removeEventListener('keydown', window.form.onUploadEscPress);
   });
 
   textArea.addEventListener('blur', function () {
-    document.addEventListener('keydown', window.form.uploadEscPress);
+    document.addEventListener('keydown', window.form.onUploadEscPress);
   });
   // ---------------------------------------
 
@@ -150,7 +150,7 @@
       .querySelector('.success');
 
   function openSuccess() {
-    document.addEventListener('keydown', window.form.uploadEscPress);
+    document.addEventListener('keydown', window.form.onUploadEscPress);
     window.form.resetFilter();
     var openedSuccessTenplate = templateSuccess.cloneNode(true);
     document.querySelector('main').appendChild(openedSuccessTenplate);

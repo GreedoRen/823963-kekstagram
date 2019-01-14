@@ -85,7 +85,7 @@
       }
     }
 
-    var debounceFilters = window.debounce.cb(sortPhoto);
+    var debounceFilters = window.debounce.timeout(sortPhoto);
     imgFiltersForm.addEventListener('click', function (evt) {
       var target = evt.target;
       setClass(target.id);

@@ -80,7 +80,7 @@
     document.removeEventListener('keydown', onUploadEscPress);
   }
 
-  function photoSizeChanged(step) {
+  function changePhotoSize(step) {
     var currentSize = parseInt(scaleControlValue.value, 10);
     currentSize += VALUE_SIZE_STEP * step;
     if (currentSize >= VALUE_SIZE_MIN && currentSize <= VALUE_SIZE_MAX) {
@@ -90,16 +90,16 @@
   }
 
   scaleControlSmaller.addEventListener('click', function () {
-    photoSizeChanged(-1);
+    changePhotoSize(-1);
   });
 
   scaleControlBigger.addEventListener('click', function () {
-    photoSizeChanged(1);
+    changePhotoSize(1);
   });
 
   uploadInput.addEventListener('change', function () {
     uploadFormOpen();
-    window.upload.fileloader();
+    window.upload.loadFile();
   });
 
   Array.from(effectsItem).forEach(function (item) {
@@ -190,8 +190,8 @@
   window.form = {
     imgPreviewElement: imgPreviewElement,
     uploadOverlay: uploadOverlay,
-    uploadEscPress: onUploadEscPress,
-    uploadClose: onUploadClose,
+    onUploadEscPress: onUploadEscPress,
+    onUploadClose: onUploadClose,
     resetFilter: resetFilter
 
   };
