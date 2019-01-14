@@ -77,6 +77,7 @@
   function onUploadClose() {
     uploadOverlay.classList.add('hidden');
     uploadInput.value = '';
+    resetFilter();
     document.removeEventListener('keydown', onUploadEscPress);
   }
 
@@ -191,7 +192,6 @@
     imgPreviewElement: imgPreviewElement,
     uploadOverlay: uploadOverlay,
     onUploadEscPress: onUploadEscPress,
-    onUploadClose: onUploadClose,
     resetFilter: resetFilter
 
   };

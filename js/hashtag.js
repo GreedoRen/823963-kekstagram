@@ -29,7 +29,7 @@
         hashtagInputText.setCustomValidity('Максимум 20 символов, включая решётку - ' + hashtags[i]);
       } else if (hashtags[i].length < 2) {
         hashtagInputText.setCustomValidity('Хештег не должен состоять из одной решётки - ' + hashtags[i]);
-      } else if (hashtags[i].indexOf('#', 1) !== -1) {
+      } else if (hashtags[i].indexOf(',') !== -1) {
         hashtagInputText.setCustomValidity('Хэштеги должны разделяться пробелом');
       }
       for (var j = i; j < hashtags.length - 1; j++) {
@@ -81,7 +81,9 @@
 
   function closeSuccess() {
     document.removeEventListener('click', onSuccessClick);
-    document.querySelector('main').removeChild(document.querySelector('main').querySelector('.success'));
+    if (document.querySelector('.success')) {
+      document.querySelector('main').removeChild(document.querySelector('.success'));
+    }
   }
 
   function onSuccessClick(evt) {
@@ -98,6 +100,8 @@
   }
 
   function closePopup() {
+    hashtagInputText.value = '';
+    hashtagInputText.setCustomValidity('');
     imgUploadForm.reset();
     window.form.uploadOverlay.classList.add('hidden');
     window.form.imgPreviewElement.style = '';
@@ -110,7 +114,9 @@
 
   function closeError() {
     document.removeEventListener('click', onErrorClick);
-    document.querySelector('main').removeChild(document.querySelector('main').querySelector('.error'));
+    if (document.querySelector('.error')) {
+      document.querySelector('main').removeChild(document.querySelector('.error'));
+    }
   }
 
   function onErrorClick(evt) {

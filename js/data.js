@@ -10,10 +10,6 @@
   var filters = document.querySelector('.img-filters');
   var picturesList = [];
 
-  function getNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-
   function getPicture(object) {
     var objectElement = pictureTemplate.cloneNode(true);
     objectElement.querySelector('.picture__img').src = object.url;
@@ -104,7 +100,6 @@
 
 
   window.data = {
-    getNumber: getNumber,
     picturesList: picturesList
   };
 })();
