@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  var randomPhoto = {
+  var RandomPhoto = {
     MIN: 0,
     MAX: 10
   };
@@ -8,7 +8,7 @@
   var imgFiltersButton = imgFiltersForm.querySelectorAll('.img-filters__button');
   var picture = document.querySelector('.pictures');
   var filters = document.querySelector('.img-filters');
-  var pictureList = [];
+  var picturesList = [];
 
   function getNumber(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
@@ -21,17 +21,17 @@
     objectElement.querySelector('.picture__comments').textContent = object.comments.length;
 
     objectElement.querySelector('.picture').addEventListener('click', function () {
-      window.picture.getBigPicture(object);
+      window.picture.getBigPic(object);
     });
 
     return objectElement;
   }
 
-  function getFragmentPictures(array, template) {
+  function getFragmentPictures(array) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < array.length; i++) {
-      fragment.appendChild(getPicture(array[i], template));
-    }
+    array.forEach(function (template) {
+      fragment.appendChild(getPicture(template));
+    });
     document.querySelector('.pictures').appendChild(fragment);
   }
 
@@ -49,8 +49,8 @@
   function onLoad(data) {
     getFragmentPictures(data);
     filters.classList.remove('img-filters--inactive');
-    pictureList = data;
-    filter(pictureList);
+    picturesList = data;
+    filter(picturesList);
   }
 
 
@@ -63,7 +63,7 @@
 
   function filter(photos) {
     var addNewPhoto = function (photo) {
-      return window.util.shuffleArray(photo).slice(randomPhoto.MIN, randomPhoto.MAX);
+      return window.util.shuffleArray(photo).slice(RandomPhoto.MIN, RandomPhoto.MAX);
     };
 
     function sortPhoto(evt) {
@@ -85,7 +85,7 @@
       }
     }
 
-    var debounceFilters = window.debounce(sortPhoto);
+    var debounceFilters = window.debounce.cb(sortPhoto);
     imgFiltersForm.addEventListener('click', function (evt) {
       var target = evt.target;
       setClass(target.id);
@@ -105,7 +105,7 @@
 
   window.data = {
     getNumber: getNumber,
-    pictureList: pictureList
+    picturesList: picturesList
   };
 })();
 

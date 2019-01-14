@@ -23,13 +23,13 @@
   }
 
   function hideBigPictureHandler(hide) {
-    if (hide.keyCode === 27) {
+    if (hide.keyCode === window.util.ESC_KEYCODE) {
       closeBigPicture();
     }
   }
 
   bigPictureClose.addEventListener('click', closeBigPicture);
-  function getBigPicture(object) {
+  function getBigPic(object) {
     showBigPicture();
     picture = object;
     bigPicture.querySelector('.big-picture__img img').src = object.url;
@@ -57,15 +57,16 @@
     return liElement;
   }
 
-  function addComments(object) {
+  function addComments(objects) {
     while (bigPictureComments.firstChild) {
       bigPictureComments.removeChild(bigPictureComments.firstChild);
     }
-
-    for (var i = 0; i < object.length; i++) {
-      var commentsItem = createCommentTemplate(object[i]);
-      bigPictureComments.appendChild(commentsItem);
-    }
+    var fragment = document.createDocumentFragment();
+    objects.forEach(function (object) {
+      var commentsItem = createCommentTemplate(object);
+      fragment.appendChild(commentsItem);
+    });
+    bigPictureComments.appendChild(fragment);
   }
 
   function reset() {
@@ -76,9 +77,9 @@
 
   function loadNewComments() {
     var partComments = picture.comments.slice(countIndexComments, countIndexComments + COMMENTS_MAX);
-    for (var i = 0; i < partComments.length; i++) {
-      arrayComments.push(partComments[i]);
-    }
+    partComments.forEach(function (partComment) {
+      arrayComments.push(partComment);
+    });
     addComments(arrayComments);
     countIndexComments += COMMENTS_MAX;
 
@@ -99,7 +100,7 @@
   // -----------------------
 
   window.picture = {
-    getBigPicture: getBigPicture
+    getBigPic: getBigPic
   };
 })();
 

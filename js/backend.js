@@ -8,7 +8,7 @@
     DATA: 'https://js.dump.academy/kekstagram/data'
   };
 
-  function serverRequest(onLoad, onError) {
+  function serverRequested(onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -36,13 +36,13 @@
   }
 
   function save(data, onLoad, onError) {
-    var xhr = serverRequest(onLoad, onError);
+    var xhr = serverRequested(onLoad, onError);
     xhr.open('POST', Url.UPLOAD);
     xhr.send(data);
   }
 
   function load(onLoad, onError) {
-    var xhr = serverRequest(onLoad, onError);
+    var xhr = serverRequested(onLoad, onError);
     xhr.open('GET', Url.DATA);
     xhr.send();
   }

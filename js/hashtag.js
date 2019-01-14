@@ -41,16 +41,16 @@
   });
 
   hashtagInputText.addEventListener('focus', function () {
-    document.removeEventListener('keydown', window.form.uploadFormEscPress);
+    document.removeEventListener('keydown', window.form.uploadEscPress);
   });
 
   hashtagInputText.addEventListener('blur', function () {
-    document.addEventListener('keydown', window.form.uploadFormEscPress);
+    document.addEventListener('keydown', window.form.uploadEscPress);
   });
 
   // --------------------------------------
 
-  function commentsLengthValidator(length) {
+  function commentsLengthVCheck(length) {
     var messageLength = '';
 
     if (length > MAX_LENGTH_COMMENT) {
@@ -67,15 +67,15 @@
 
   textArea.addEventListener('input', function (evt) {
     var commentLength = evt.target.value.length;
-    commentsLengthValidator(commentLength);
+    commentsLengthVCheck(commentLength);
   });
 
   textArea.addEventListener('focus', function () {
-    document.removeEventListener('keydown', window.form.uploadFormEscPress);
+    document.removeEventListener('keydown', window.form.uploadEscPress);
   });
 
   textArea.addEventListener('blur', function () {
-    document.addEventListener('keydown', window.form.uploadFormEscPress);
+    document.addEventListener('keydown', window.form.uploadEscPress);
   });
   // ---------------------------------------
 
@@ -129,14 +129,14 @@
   function openError(errorNode) {
     var openErrorTemplate = templateError.cloneNode(true);
     document.querySelector('main').appendChild(openErrorTemplate);
-    var openedBtnError = openErrorTemplate.querySelectorAll('.error__button');
-    openedBtnError[0].focus();
+    var openBtnError = openErrorTemplate.querySelectorAll('.error__button');
+    openBtnError[0].focus();
     if (errorNode) {
       openErrorTemplate.querySelector('.error__title').innerHTML = errorNode;
       openErrorTemplate.querySelector('.error__title').style = 'font-size: 20px';
     }
 
-    openedBtnError.forEach(function (evtBtn) {
+    openBtnError.forEach(function (evtBtn) {
       evtBtn.addEventListener('click', function () {
         closeError();
       });
@@ -150,7 +150,7 @@
       .querySelector('.success');
 
   function openSuccess() {
-    document.addEventListener('keydown', window.form.uploadFormEscPress);
+    document.addEventListener('keydown', window.form.uploadEscPress);
     window.form.resetFilter();
     var openedSuccessTenplate = templateSuccess.cloneNode(true);
     document.querySelector('main').appendChild(openedSuccessTenplate);

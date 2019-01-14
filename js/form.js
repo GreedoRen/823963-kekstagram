@@ -3,7 +3,7 @@
   var VALUE_SIZE_MIN = 25;
   var VALUE_SIZE_MAX = 100;
   var VALUE_SIZE_STEP = 25;
-  var FILTERS = {
+  var filters = {
     none: {
       className: 'effects__preview--none',
       filter: '',
@@ -60,27 +60,27 @@
   var imageUploadPreview = uploadOverlay.querySelector('.img-upload__preview img');
   var form = document.querySelector('.img-upload__form');
 
-  function uploadFormEscPress(evt) {
+  function onUploadEscPress(evt) {
     if (evt.keyCode === window.util.ESC_KEYCODE) {
       uploadInput.value = '';
-      uploadFormClose();
+      onUploadClose();
     }
   }
 
   function uploadFormOpen() {
     uploadOverlay.classList.remove('hidden');
     effectLevelSlider.style.display = 'none';
-    uploadOverlay.querySelector('.img-upload__cancel').addEventListener('click', uploadFormClose);
-    document.addEventListener('keydown', uploadFormEscPress);
+    uploadOverlay.querySelector('.img-upload__cancel').addEventListener('click', onUploadClose);
+    document.addEventListener('keydown', onUploadEscPress);
   }
 
-  function uploadFormClose() {
+  function onUploadClose() {
     uploadOverlay.classList.add('hidden');
     uploadInput.value = '';
-    document.removeEventListener('keydown', uploadFormEscPress);
+    document.removeEventListener('keydown', onUploadEscPress);
   }
 
-  function photoSizeChanging(step) {
+  function photoSizeChanged(step) {
     var currentSize = parseInt(scaleControlValue.value, 10);
     currentSize += VALUE_SIZE_STEP * step;
     if (currentSize >= VALUE_SIZE_MIN && currentSize <= VALUE_SIZE_MAX) {
@@ -90,16 +90,16 @@
   }
 
   scaleControlSmaller.addEventListener('click', function () {
-    photoSizeChanging(-1);
+    photoSizeChanged(-1);
   });
 
   scaleControlBigger.addEventListener('click', function () {
-    photoSizeChanging(1);
+    photoSizeChanged(1);
   });
 
   uploadInput.addEventListener('change', function () {
     uploadFormOpen();
-    window.upload.upload();
+    window.upload.fileloader();
   });
 
   Array.from(effectsItem).forEach(function (item) {
@@ -112,11 +112,7 @@
       effectDepth.style.width = '100%';
       effectLevelValue.value = 100;
       imgPreviewElement.classList.add('effects__preview--' + effect);
-      if (effect === 'none') {
-        effectLevelSlider.style.display = 'none';
-      } else {
-        effectLevelSlider.style.display = 'block';
-      }
+      effectLevelSlider.style.display = (effect === 'none') ? 'none' : 'block';
     });
   });
 
@@ -128,9 +124,9 @@
   function filterEffects(i) {
     var effectLevel = getEffectLevel(pinEffect.offsetLeft, effectLine.offsetWidth);
     effectLevelValue.value = effectLevel;
-    for (i in FILTERS) {
-      if (imageUploadPreview.className === FILTERS[i].className) {
-        imageUploadPreview.style.filter = FILTERS[i].filter + '(' + FILTERS[i].minValue / FILTERS[i].maxValue * effectLevel + FILTERS[i].filterUnit + ')';
+    for (i in filters) {
+      if (imageUploadPreview.className === filters[i].className) {
+        imageUploadPreview.style.filter = filters[i].filter + '(' + filters[i].minValue / filters[i].maxValue * effectLevel + filters[i].filterUnit + ')';
       }
     }
   }
@@ -151,7 +147,7 @@
         x: evt.clientX
       };
 
-      function mouseMove(move) {
+      function onMouseMove(move) {
         move.preventDefault();
 
         var shiftPosition = {
@@ -176,15 +172,15 @@
         filterEffects();
       }
 
-      function mouseUp(up) {
+      function onMouseUp(up) {
         up.preventDefault();
         filterEffects();
-        document.removeEventListener('mousemove', mouseMove);
-        document.removeEventListener('mouseup', mouseUp);
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
       }
 
-      document.addEventListener('mousemove', mouseMove);
-      document.addEventListener('mouseup', mouseUp);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
     });
   }
   dragImageEffects();
@@ -194,8 +190,8 @@
   window.form = {
     imgPreviewElement: imgPreviewElement,
     uploadOverlay: uploadOverlay,
-    uploadFormEscPress: uploadFormEscPress,
-    uploadFormClose: uploadFormClose,
+    uploadEscPress: onUploadEscPress,
+    uploadClose: onUploadClose,
     resetFilter: resetFilter
 
   };
