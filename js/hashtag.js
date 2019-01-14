@@ -29,8 +29,6 @@
         hashtagInputText.setCustomValidity('Максимум 20 символов, включая решётку - ' + hashtags[i]);
       } else if (hashtags[i].length < 2) {
         hashtagInputText.setCustomValidity('Хештег не должен состоять из одной решётки - ' + hashtags[i]);
-      } else if (hashtags[i].indexOf(',') !== -1) {
-        hashtagInputText.setCustomValidity('Хэштеги должны разделяться пробелом');
       }
       for (var j = i; j < hashtags.length - 1; j++) {
         if (hashtags[j + 1] === hashtags[i]) {
@@ -81,9 +79,9 @@
 
   function closeSuccess() {
     document.removeEventListener('click', onSuccessClick);
-    if (document.querySelector('.success')) {
-      document.querySelector('main').removeChild(document.querySelector('.success'));
-    }
+    document.querySelector('main').removeChild(document.querySelector('.success'));
+    document.removeEventListener('keydown', window.form.onUploadEscPress);
+    document.removeEventListener('keydown', onSuccessEsc);
   }
 
   function onSuccessClick(evt) {
@@ -114,9 +112,9 @@
 
   function closeError() {
     document.removeEventListener('click', onErrorClick);
-    if (document.querySelector('.error')) {
-      document.querySelector('main').removeChild(document.querySelector('.error'));
-    }
+    document.querySelector('main').removeChild(document.querySelector('.error'));
+    document.removeEventListener('keydown', window.form.onUploadEscPress);
+    document.removeEventListener('keydown', onErrorEsc);
   }
 
   function onErrorClick(evt) {
